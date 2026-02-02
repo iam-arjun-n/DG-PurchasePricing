@@ -67,9 +67,23 @@ modules:
       - comdeloittemdgpurchasepricinginitiator.zip
       name: comdeloittemdgpurchasepricinginitiator
       target-path: app/
+    - artifacts:
+      - comdeloittemdgpurchasepricingapprover.zip
+      name: comdeloittemdgpurchasepricingapprover
+      target-path: app/
 - name: comdeloittemdgpurchasepricinginitiator
   type: html5
   path: app/initiator
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comdeloittemdgpurchasepricingapprover
+  type: html5
+  path: app/approver
   build-parameters:
     build-result: dist
     builder: custom
