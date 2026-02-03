@@ -7,16 +7,17 @@ modules:
   type: nodejs
   path: gen/srv
   requires:
-  - name: DG-PurchasePricing-auth
-  - name: DG-PurchasePricing-db
-  - name: DG-PurchasePricing-connectivity
-  - name: DG-PurchasePricing-destination
+    - name: DG-PurchasePricing-auth
+    - name: DG-PurchasePricing-db
+    - name: DG-PurchasePricing-connectivity
+    - name: DG-PurchasePricing-destination
   provides:
-  - name: srv-api
-    properties:
-      srv-url: ${default-url}
+    - name: srv-api
+      properties:
+        srv-url: ${default-url}
   parameters:
     buildpack: nodejs_buildpack
+    memory: 256M
     instances: 1
   build-parameters:
     builder: npm-ci
@@ -24,53 +25,55 @@ modules:
   type: hdb
   path: gen/db
   requires:
-  - name: DG-PurchasePricing-db
+    - name: DG-PurchasePricing-db
   parameters:
     buildpack: nodejs_buildpack
 - name: DG-PurchasePricing
   type: approuter.nodejs
   path: app/router
   requires:
-  - name: srv-api
-    group: destinations
-    properties:
-      forwardAuthToken: true
-      name: srv-api
-      url: ~{srv-url}
-  - name: DG-PurchasePricing-auth
-  - name: DG-PurchasePricing-destination
-  - name: DG-PurchasePricing-html5-runtime
+    - name: srv-api
+      group: destinations
+      properties:
+        name: srv-api
+        url: ~{srv-url}
+        forwardAuthToken: true
+    - name: DG-PurchasePricing-auth
+    - name: DG-PurchasePricing-destination
+    - name: DG-PurchasePricing-html5-runtime
   provides:
-  - name: app-api
-    properties:
-      app-protocol: ${protocol}
-      app-uri: ${default-uri}
+    - name: app-api
+      properties:
+        app-uri: ${default-uri}
+        app-protocol: ${protocol}
   parameters:
     disk-quota: 256M
-    keep-existing-routes: true
     memory: 256M
+    keep-existing-routes: false
+    routes:
+      - host: dg-purchasepricing-dev
 - name: DG-PurchasePricing-app-deployer
   type: com.sap.application.content
   path: gen
   requires:
-  - name: DG-PurchasePricing-auth
-  - name: srv-api
-  - name: DG-PurchasePricing-html5-repo-host
-    parameters:
-      config:
-        HTML5Runtime_enabled: true
-      content-target: true
+    - name: DG-PurchasePricing-auth
+    - name: srv-api
+    - name: DG-PurchasePricing-html5-repo-host
+      parameters:
+        content-target: true
+        config:
+          HTML5Runtime_enabled: true
   build-parameters:
     build-result: app/
     requires:
-    - artifacts:
-      - comdeloittemdgpurchasepricinginitiator.zip
-      name: comdeloittemdgpurchasepricinginitiator
-      target-path: app/
-    - artifacts:
-      - comdeloittemdgpurchasepricingapprover.zip
-      name: comdeloittemdgpurchasepricingapprover
-      target-path: app/
+      - name: comdeloittemdgpurchasepricinginitiator
+        artifacts:
+          - comdeloittemdgpurchasepricinginitiator.zip
+        target-path: app/
+      - name: comdeloittemdgpurchasepricingapprover
+        artifacts:
+          - comdeloittemdgpurchasepricingapprover.zip
+        target-path: app/
 - name: comdeloittemdgpurchasepricinginitiator
   type: html5
   path: app/initiator
@@ -78,8 +81,8 @@ modules:
     build-result: dist
     builder: custom
     commands:
-    - npm install
-    - npm run build:cf
+      - npm install
+      - npm run build:cf
     supported-platforms: []
 - name: comdeloittemdgpurchasepricingapprover
   type: html5
@@ -88,38 +91,67 @@ modules:
     build-result: dist
     builder: custom
     commands:
-    - npm install
-    - npm run build:cf
+      - npm install
+      - npm run build:cf
     supported-platforms: []
+- name: DG-PurchasePricing-destination-content
+  type: com.sap.application.content
+  requires:
+    - name: DG-PurchasePricing-destination
+      parameters:
+        content-target: true
+    - name: DG-PurchasePricing-html5-repo-host
+      parameters:
+        service-key:
+          name: DG-PurchasePricing-html5-repo-host-key
+    - name: DG-PurchasePricing-auth
+      parameters:
+        service-key:
+          name: DG-PurchasePricing-auth-key
+  parameters:
+    content:
+      instance:
+        destinations:
+          - Name: DG_PurchasePricing_repo_host
+            ServiceInstanceName: DG-PurchasePricing-html5-repo-host
+            ServiceKeyName: DG-PurchasePricing-html5-repo-host-key
+            sap.cloud.service: DG-PurchasePricing
+          - Name: DG_PurchasePricing_xsuaa
+            Authentication: OAuth2UserTokenExchange
+            ServiceInstanceName: DG-PurchasePricing-auth
+            ServiceKeyName: DG-PurchasePricing-auth-key
+            sap.cloud.service: DG-PurchasePricing
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
 - name: workflow
   type: com.sap.application.content
   path: workflow
   requires:
-  - name: sap_processautomation
-    parameters:
-      content-target: true
-      service-key:
-        config:
-          deployUsageScenario: workflow
-        name: spa-workflow-service-key
+    - name: sap_processautomation
+      parameters:
+        content-target: true
+        service-key:
+          name: spa-workflow-service-key
+          config:
+            deployUsageScenario: workflow
 resources:
 - name: DG-PurchasePricing-auth
   type: org.cloudfoundry.managed-service
+  requires:
+    - name: app-api
   parameters:
-    config:
-      oauth2-configuration:
-        credential-types:
-        - binding-secret
-        - x509
-        redirect-uris:
-        - https://*~{app-api/app-uri}/**
-      tenant-mode: dedicated
-      xsappname: DG-PurchasePricing-${org}-${space}
-    path: ./xs-security.json
     service: xsuaa
     service-plan: application
-  requires:
-  - name: app-api
+    path: ./xs-security.json
+    service-key:
+      name: DG-PurchasePricing-auth-key
+    config:
+      xsappname: dg-purchasepricing
+      tenant-mode: dedicated
+      oauth2-configuration:
+        redirect-uris:
+          - https://*~{app-api/app-uri}/**
 - name: DG-PurchasePricing-db
   type: com.sap.xs.hdi-container
   parameters:
@@ -133,24 +165,26 @@ resources:
 - name: DG-PurchasePricing-destination
   type: org.cloudfoundry.managed-service
   parameters:
+    service: destination
+    service-plan: lite
     config:
-      HTML5Runtime_enabled: false
+      HTML5Runtime_enabled: true
       init_data:
         instance:
           destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
+            - Name: ui5
+              Type: HTTP
+              URL: https://ui5.sap.com
+              Authentication: NoAuthentication
+              ProxyType: Internet
           existing_destinations_policy: update
-    service: destination
-    service-plan: lite
 - name: DG-PurchasePricing-html5-repo-host
   type: org.cloudfoundry.managed-service
   parameters:
     service: html5-apps-repo
     service-plan: app-host
+    service-key:
+      name: DG-PurchasePricing-html5-repo-host-key
 - name: DG-PurchasePricing-html5-runtime
   type: org.cloudfoundry.managed-service
   parameters:
@@ -161,12 +195,14 @@ resources:
   parameters:
     service: process-automation-service
     service-plan: standard
+
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
+
 build-parameters:
   before-all:
-  - builder: custom
-    commands:
-    - npm ci
-    - npx cds build --production
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
