@@ -1,0 +1,128 @@
+<mvc:View
+    controllerName="com.deloitte.mdg.purchase.pricing.initiator.controller.Submission"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns="sap.m"
+    xmlns:sap.ui.unified="sap.ui.unified"
+>
+    <Page
+        id="Create"
+        title="Condition Records - {RequestModel>/requestType}"
+        showNavButton="true"
+        navButtonPress="navBack"
+        backgroundDesign="Solid"
+    >
+        <content>
+            <Panel
+                id="Create_Page_Panel"
+                headerText="Condition Record Detail's"
+                expandable="true"
+                expanded="true"
+                width="auto"
+                class="sapUiResponsiveMargin"
+            >
+                <Table
+                    id="Submission_Table"
+                    inset="false"
+                    noDataText="No Data. Use 'Upload' or 'Add new' for adding records"
+                    selectionChange="onSelectionChange"
+                    alternateRowColors="false"
+                    mode="SingleSelectLeft"
+                    items="{
+                        path: 'submissionModel>/rows'
+                    }"
+                >
+                    
+                    <headerToolbar>
+                            <OverflowToolbar width="100%" id="Submission_Toolbar1">
+                                <content>
+                                    <OverflowToolbar id="Submission_Header1" width="100%">
+                                        <content>
+                                            <sap.ui.unified:FileUploader xmlns:sap.ui.unified="sap.ui.unified" id="Submission_FileUploader" buttonText="Upload" sameFilenameAllowed="true" 
+                                                iconOnly="false" buttonOnly="true" fileType="XLSX,xlsx" icon="sap-icon://upload" iconFirst="true" style="Emphasized" 
+                                                change="onExcelUpload" visible="false" />
+                                            <Button id="Submission_Button_Export" text="Download Template" icon="sap-icon://download" type="Default" press="onDownloadTemplate"/>
+                                            <ToolbarSpacer id="Submission_Header2" />
+                                            <Button id="Submission_Button_View" text="View" icon="sap-icon://detail-view" press="onView" enabled="false" />
+                                            <Button id="Submission_Button_ChangeLog" text="View Change logs" icon="sap-icon://notes" press="viewChangeLogs" enabled="false" />
+                                            <Button text="Edit" id="Submission_Button_Edit" icon="sap-icon://edit" press="onEdit" enabled="false"/>
+                                            <Button text="Add New" id="Submission_Button_Add" icon="sap-icon://add" press="onAddNew" />
+                                            <Button text="Copy from Cost Center" id="Submission_Button_AddFromRef" icon="sap-icon://copy" press="copyFromExistingData"/>
+                                            <Button text="Delete" id="Submission_Button_Delete" icon="sap-icon://delete" press="onDelete" enabled="false"/>
+                                            <Button id="Submission_Button_ExportAtt" icon="sap-icon://excel-attachment" text="Export" press="onExport" visible="false" />
+                                        </content>
+                                    </OverflowToolbar>
+                                </content>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                    <columns>
+                        <Column id="Submission_Column_ConditionType"><Text id="_IDGenText" text="Condition Type"/></Column>
+    <Column id="Submission_Column_SalesOrg"><Text id="_IDGenText1" text="Sales Organization"/></Column>
+    <Column id="Submission_Column_DistChan"><Text id="_IDGenText2" text="Distribution Channel"/></Column>
+    <Column id="Submission_Column_Customer"><Text id="_IDGenText3" text="Customer"/></Column>
+    <Column id="Submission_Column_Material"><Text id="_IDGenText4" text="Material"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem id="Create_Page_ColumnListItem">
+                            <cells>
+        <Text id="_IDGenText5" text="{submissionModel>Display/ConditionType}"/>
+        <Text id="_IDGenText6" text="{submissionModel>Display/SalesOrganization}"/>
+        <Text id="_IDGenText7" text="{submissionModel>Display/DistributionChannel}"/>
+        <Text id="_IDGenText8" text="{submissionModel>Display/Customer}"/>
+        <Text id="_IDGenText9" text="{submissionModel>Display/Material}"/>
+      </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </Panel>
+
+            <Panel id="_IDGenPanel"
+                headerText="Comments"
+                expandable="true"
+                expanded="true"
+                class="sapUiResponsiveMargin"
+            >
+                <content>
+                    <FeedInput id="_IDGenFeedInput"
+                        post="onPost"
+                        maxLength="500"
+                        placeholder="Add a comment - Character length limited to 500"
+                        icon="sap-icon://comment"
+                        rows="1"
+                    />
+
+                    <List id="_IDGenList"
+                        items="{commentModel>/}"
+                        showSeparators="Inner"
+                    >
+                        <FeedListItem id="_IDGenFeedListItem"
+                            sender="{commentModel>UserName}"
+                            timestamp="{commentModel>Date}"
+                            text="{commentModel>Text}"
+                        />
+                    </List>
+                </content>
+            </Panel>
+        </content>
+        <footer>
+            <OverflowToolbar id="Create_Page_OverflowToolbar1">
+                <Button
+                    id="Create_Page_Button_Message"
+                    icon="sap-icon://message-popup"
+                    press=""
+                    text=""
+                />
+                <Button text="Save as Draft" id="Submission_Button_SaveAsDraft" type="Attention" press="onDraftPress" visible="true"/>
+                <ToolbarSpacer id="Create_Page_ToolbarSpacer1" />
+                <Button
+                    id="Create_Page_Button_InitiateApprovalProcess"
+                    text="Send for Approval"
+                    icon="sap-icon://paper-plane"
+                    type="Accept"
+                    press="onSendForApproval"
+                />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>
