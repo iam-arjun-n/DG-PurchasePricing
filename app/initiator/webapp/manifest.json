@@ -15,6 +15,40 @@
       "version": "1.20.1",
       "toolsId": "4ef402cd-d372-4f9a-b07b-b173d6d44c62"
     },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/API_SLSPRICINGCONDITIONRECORD_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "2.0",
+          "localUri": "localService/metadata.xml"
+        }
+      },
+      "SAPService": {
+        "uri": "/sap/opu/odata/sap/ZMDG_SLSPRICINGCONDITIONRECORD_SRV/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "ValueHelp1Service": {
+        "uri": "/sap/opu/odata/sap/ZMATERIAL_MASTER_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "2.0"
+        }
+      },
+      "DatabaseService": {
+        "uri": "/odata/v4/purchase-pricing/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    },
     "crossNavigation": {
       "inbounds": {
         "DG_PurchasePricing-Display": {
@@ -64,6 +98,40 @@
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
           "bundleName": "com.deloitte.mdg.purchase.pricing.initiator.i18n.i18n"
+        }
+      },
+      "MainServiceModel": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "SAPSalesModel": {
+        "dataSource": "SAPService",
+        "settings": {
+          "operationMode": "Server",
+          "earlyRequests": true
+        }
+      },
+      "ValueHelp1Model": {
+        "dataSource": "ValueHelp1Service",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "ServiceModel": {
+        "dataSource": "DatabaseService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
         }
       }
     },
