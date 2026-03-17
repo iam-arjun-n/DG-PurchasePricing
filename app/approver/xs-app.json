@@ -29,9 +29,9 @@
       "destination": "ui5"
     },
     {
-      "source": "^/odata/v4/sale-pricing/(.*)$",
-      "target": "/odata/v4/sale-pricing/$1",
-      "destination": "SalesPricing-SRV",
+      "source": "^/odata/v4/purchase-pricing/(.*)$",
+      "target": "/odata/v4/purchase-pricing/$1",
+      "destination": "PurchasePricing-SRV",
       "csrfProtection": true,
       "authenticationType": "xsuaa"
     },
