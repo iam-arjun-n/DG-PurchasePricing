@@ -95,8 +95,8 @@
 			"priority": "MEDIUM",
 			"isHiddenInLogForParticipant": false,
 			"supportsForward": false,
-			"userInterface": "sapui5://1d2a62e5-de95-4e43-8a66-cf29eb01e1ce.DG-PurchasePricing.comdeloittemdgpurchasepricingapprover/com.deloitte.mdg.purchase.pricing.approver",
-			"recipientGroups": "SalesPricingApproval",
+			"userInterface": "sapui5://16483e61-43b8-4c1b-b91f-d55c76dbcd35.DG-PurchasePricing.comdeloittemdgpurchasepricingapprover/com.deloitte.mdg.purchase.pricing.approver",
+			"recipientGroups": "DataGuardian_Tiles",
 			"id": "usertask1",
 			"name": "Approver"
 		},
