@@ -1,4 +1,3 @@
-
 sap.ui.define([], function () {
   "use strict";
 
@@ -29,10 +28,11 @@ sap.ui.define([], function () {
         },
         {
           id: "PB00_MAT_SUP",
-          text: "Material / Supply",
+          text: "Plant / Supplier / Material Type",
           fields: [
-            "Field_Material",
-            "Column_Supplier",
+            "Field_Plant",
+            "Field_Supplier",
+            "Column_Material_Type",
             "Column_Status",
             "Column_Description",
             "Column_Processing_Status",

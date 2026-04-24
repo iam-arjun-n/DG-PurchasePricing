@@ -40,6 +40,24 @@
                     columnsM="1"
                     singleContainerFullSize="false"
                 >
+                <Label
+                        id="Field_Plant_Label"
+                        text="Plant"
+                        labelFor="Field_Plant_Input"
+                        required="true"
+                        visible="{viewModel>/Field_Plant/visible}"
+                    />
+                    <Input
+                        id="Field_Plant_Input"
+                        value="{fieldModel>/Plant}"
+                        required="true"
+                        showValueHelp="true"
+                        showSuggestion="true"
+                        valueHelpRequest="oonF4_Column_Plant"
+                        suggest="onSuggestPlant"
+                        liveChange="onLivePlant"
+                        visible="{viewModel>/Field_Plant/visible}"
+                    />
                     <Label
                         id="Field_Sales_Organization_Label"
                         text="Sales Organization"
@@ -299,6 +317,27 @@
                                 />
                             </u:template>
                         </u:Column>
+                        <u:Column
+                            id="Column_Material_Type"
+                            width="12rem"
+                            visible="{viewModel>/Column_Material_Type/visible}"
+                        >
+                            <Label
+                                id="Column_Label_Material_Type"
+                                text="Material Type"
+                                visible="{viewModel>/Column_Material_Type/visible}"
+                            />
+                            <u:template>
+                                <Input
+                                    id="Column_Input_Material_Type"
+                                    value="{columnModel>Material_Type}"
+                                    showValueHelp="true"
+                                    valueHelpRequest="onF4_Column_MaterialType"
+                                    visible="{viewModel>/Column_Material_Type/visible}"
+                                />
+                            </u:template>
+                        </u:Column>
+                        
                         <u:Column
                             id="Column_Material_Group"
                             width="12rem"

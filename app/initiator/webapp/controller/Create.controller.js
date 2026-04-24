@@ -16,6 +16,7 @@ sap.ui.define([
             this.getView().setModel(oModel);
 
             var oFieldModel = new JSONModel({
+                Plant:"",
                 Sales_Organization: "",
                 Distribution_Channel: "",
                 Customer: "",
@@ -46,6 +47,7 @@ sap.ui.define([
 
 
             var oViewModel = new JSONModel({
+                Field_Plant: { visible: false },
                 Field_Sales_Organization: { visible: false },
                 Field_Distribution_Channel: { visible: false },
                 Field_Customer: { visible: false },
@@ -59,6 +61,7 @@ sap.ui.define([
                 Field_Supplier: { visible: false },
 
                 Column_Material: { visible: false },
+                Column_Material_Type: { visible: false },
                 Column_Material_Group: { visible: false },
                 Column_Plant: { visible: false },
                 Column_Status: { visible: false },

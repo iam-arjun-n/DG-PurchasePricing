@@ -24,6 +24,7 @@ sap.ui.define([
 
                 this.getView().setModel(
                     new JSONModel({
+                        Plant: oFields.Plant || "",
                         Sales_Organization: oFields.Sales_Organization || "",
                         Distribution_Channel: oFields.Distribution_Channel || "",
                         Customer: oFields.Customer || "",
@@ -61,6 +62,7 @@ sap.ui.define([
                 const oViewState = {};
 
                 [
+                    "Field_Plant",
                     "Field_Sales_Organization",
                     "Field_Distribution_Channel",
                     "Field_Customer",
@@ -75,6 +77,7 @@ sap.ui.define([
                     "Field_WBS",
                     "Column_Material",
                     "Column_Material_Group",
+                    "Column_Material_Type",
                     "Column_Plant",
                     "Column_Sales_Organization",
                     "Column_Company_Code",
