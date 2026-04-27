@@ -597,6 +597,18 @@ sap.ui.define([
                         "Field_Supplier",
                         "Column_Material_Type",
                     ],
+                },
+
+                ZS00: {
+                    ZS00_PLA_VEN_MAT: [
+                        "Field_Plant",
+                        "Field_Supplier",
+                        "Column_Material",
+                    ],
+                    ZS00_VEN_MAT: [
+                        "Field_Supplier",
+                        "Column_Material",
+                    ]
                 }
             };
 
@@ -610,6 +622,11 @@ sap.ui.define([
                     PB00_MET: "085",
                     PB00_MAT_SUP: "957"
                 },
+
+                ZS00:{
+                    ZS00_PLA_VEN_MAT:"799",
+                    ZS00_VEN_MAT:"950"
+                }
 
             };
 
@@ -625,23 +642,6 @@ sap.ui.define([
         },
         _mapFieldName: function (field) {
             const map = {
-                Plant: "Plant",
-                Supplier: "Supplier",
-                Material_Type: "MaterialType",
-                Sales_Organization: "SalesOrganization",
-                Distribution_Channel: "DistributionChannel",
-                Customer: "Customer",
-                Sold_To_Party: "SoldToParty",
-                Material: "Material",
-                Supplier: "Supplier",
-                Price_List_Type: "PriceListType",
-                Division: "Division",
-                Partner_Role: "PartnerRole"
-            };
-            return map[field];
-        },
-        _mapFieldName: function (field) {
-            const map = {
                 Sales_Organization: "SalesOrganization",
                 Distribution_Channel: "DistributionChannel",
                 Division: "Division",
@@ -650,6 +650,7 @@ sap.ui.define([
                 Supplier: "Supplier",
                 Material: "Material",
                 Material_Group: "MaterialGroup",
+                Material_Type: "MaterialType",
                 Material_Price_Group: "MaterialPricingGroup",
                 Price_List_Type: "PriceListType",
                 Plant: "Plant",
