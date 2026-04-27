@@ -593,8 +593,9 @@ sap.ui.define([
                         "Column_Company_Code",
                     ],
                     PB00_MAT_SUP: [
-                        "Field_Material",
-                        "Column_Supplier",
+                        "Field_Plant",
+                        "Field_Supplier",
+                        "Column_Material_Type",
                     ],
                 }
             };
@@ -606,8 +607,8 @@ sap.ui.define([
             const map = {
 
                 PB00: {
-                    PB00_MET:"085",
-                    PB00_MAT_SUP:"976"
+                    PB00_MET: "085",
+                    PB00_MAT_SUP: "957"
                 },
 
             };
@@ -624,6 +625,9 @@ sap.ui.define([
         },
         _mapFieldName: function (field) {
             const map = {
+                Plant: "Plant",
+                Supplier: "Supplier",
+                Material_Type: "MaterialType",
                 Sales_Organization: "SalesOrganization",
                 Distribution_Channel: "DistributionChannel",
                 Customer: "Customer",
@@ -657,7 +661,7 @@ sap.ui.define([
                 Country: "Country",
                 Region: "Region",
                 Postal_Code: "PostalCode",
-                Company_Code:"CompanyCode"
+                Company_Code: "CompanyCode"
             };
 
             return map[field];
